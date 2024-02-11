@@ -2,9 +2,9 @@
   "name": "brokenglass",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "watch": "webpack --watch"
+    "watch": "webpack --mode=development --watch",
+    "build": "webpack --mode=production"
   },
   "keywords": [],
   "author": "",

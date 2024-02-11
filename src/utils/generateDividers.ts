@@ -1,6 +1,5 @@
 import { line } from "../types";
-import { generateDividerSides } from "./generateDividerSides";
-import { getRand } from "./rand";
+import { getRandNumber } from "./getRandNumber";
 
 export function generateDividers(
   count: number,
@@ -8,37 +7,34 @@ export function generateDividers(
   canvasWidth: number,
   SIDES_COORDS: Array<line>
 ): Array<line> {
-  const sides = Array<unknown>(count).fill(null).map(() => generateDividerSides(SIDES_COORDS));
-  const res: Array<line> = [];
+  const dividers: Array<line> = [];
 
-  for (const [firstSide, secondSide] of sides) {
-    const firstSideAdjustedSide = firstSide[0].x === firstSide[1].x
-      ? "y"
-      : "x";
+  for (let i = 0; i < count; i++) {
+    const [firstSide, secondSide] = generateDividerSides(SIDES_COORDS);
 
-    const secondSideAdjustedSide = secondSide[0].x === secondSide[1].x
-      ? "y"
-      : "x";
+    const [start1, end1] = firstSide;
+    const [start2, end2] = secondSide;
 
-    const firstSideX = firstSideAdjustedSide === "x"
-      ? getRand(0, canvasWidth)
-      : firstSide[0].x;
-    const firstSideY = firstSideAdjustedSide === "y"
-      ? getRand(0, canvasHeight)
-      : firstSide[0].y;
+    const firstSideX = start1.x === end1.x ?  getRandNumber(0, canvasWidth) : start1.x;
+    const firstSideY = start1.y === end1.y ?  getRandNumber(0, canvasHeight) : start1.y;
+    const secondSideX = start2.x === end2.x ?  getRandNumber(0, canvasWidth): start2.x;
+    const secondSideY = start2.y === end2.y ?  getRandNumber(0, canvasHeight) : start2.y;
 
-    const secondSideX = secondSideAdjustedSide === "x"
-      ? getRand(0, canvasWidth)
-      : secondSide[0].x;
-    const secondSideY = secondSideAdjustedSide === "y"
-      ? getRand(0, canvasHeight)
-      : secondSide[0].y;
-
-    res.push([
-      { x: firstSideX, y: firstSideY },
-      { x: secondSideX, y: secondSideY }
-    ])
+    dividers.push([{ x: firstSideX, y: firstSideY }, { x: secondSideX, y: secondSideY }]);
   }
 
-  return res;
+  return dividers;
+}
+
+
+export function generateDividerSides(SIDES_COORDS: Array<line>): [line, line] {
+  const firstSide = getRandNumber(1, SIDES_COORDS.length);
+
+  let secondSide = getRandNumber(1, SIDES_COORDS.length);
+
+  while (secondSide === firstSide) {
+    secondSide = getRandNumber(1, SIDES_COORDS.length);
+  }
+
+  return [SIDES_COORDS[firstSide - 1], SIDES_COORDS[secondSide - 1]];
 }

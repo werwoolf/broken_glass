@@ -7,9 +7,7 @@ export function findShapeApexes(startLine: line, cleanLines: Array<line>) {
 
   const shapeApexes = [firstApex, secondApex];
 
-  let count = 0 // todo: delete
-
-  while ((firstApex.x !== shapeApexes.at(-1)?.x || firstApex.y !== shapeApexes.at(-1)?.y) && count < 25) {
+  while ((firstApex.x !== shapeApexes.at(-1)?.x || firstApex.y !== shapeApexes.at(-1)?.y)) {
     const previousApex = shapeApexes.at(-2) || { x: 0, y: 0 };
     const lastApex = shapeApexes.at(-1) || { x: 0, y: 0 };
 
@@ -52,8 +50,6 @@ export function findShapeApexes(startLine: line, cleanLines: Array<line>) {
     }
 
     shapeApexes.push(nextApex)
-
-    count++
   }
 
   // console.log(count)

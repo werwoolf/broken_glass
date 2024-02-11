@@ -1,8 +1,8 @@
-import { coordinate, rgbColor } from "../types";
-import { getRand } from "./rand";
+import { coordinate, rgbColor } from "./types";
+import { getRandNumber } from "./utils/getRandNumber";
 
 export class Shape {
-  private readonly apexes: Array<coordinate>;
+  readonly apexes: Array<coordinate>; // todo: make private
   private readonly color: rgbColor;
   private readonly canvasCtx: CanvasRenderingContext2D;
   private readonly avgCenterOffset: coordinate;
@@ -13,6 +13,7 @@ export class Shape {
     canvasCtx: CanvasRenderingContext2D,
     initOffset: coordinate
   ) {
+    console.log(apexes.length)
     this.apexes = apexes;
     this.canvasCtx = canvasCtx;
     this.initOffset = initOffset;
@@ -85,6 +86,6 @@ export class Shape {
   }
 
   private generateColor(): rgbColor {
-    return `rgb(${getRand(0, 255)}, ${getRand(0, 255)}, ${getRand(0, 255)})`
+    return `rgb(${getRandNumber(0, 255)}, ${getRandNumber(0, 255)}, ${getRandNumber(0, 255)})`
   }
 }
