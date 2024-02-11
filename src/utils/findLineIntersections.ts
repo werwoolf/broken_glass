@@ -1,12 +1,16 @@
 import { coordinate, line } from "../types";
 
-export function findLineIntersections(lines: Array<line>, index: number, maxCoord: number): Array<coordinate> {
+// find intersections for single line from array
+export function findLineIntersections(
+  lines: Array<line>,
+  index: number, maxCoord: number
+): Array<coordinate> {
   const res: Array<coordinate> = [];
   const line = lines[index];
-  const resolveLinesToCheck = [...lines];
-  resolveLinesToCheck.splice(index, 1)
 
-  resolveLinesToCheck.forEach((line2) => {
+  lines.forEach((line2, lineIdx) => {
+    // do not compare line to itself
+    if (lineIdx === index) return;
 
     const { x: x1A, y: y1A } = line[0];
     const { x: x1B, y: y1B } = line[1];
@@ -64,9 +68,8 @@ export function findLineIntersections(lines: Array<line>, index: number, maxCoor
     return { x: Math.ceil(+x), y: Math.ceil(+y) }
   });
 
-  clear.sort(({ x: x1 }, { x: x2 }) => x1 - x2)
-
-  clear.sort(({ y: y1 }, { y: y2 }) => y1 - y2)
+  clear.sort(({ x: x1 }, { x: x2 }) => x1 - x2);
+  clear.sort(({ y: y1 }, { y: y2 }) => y1 - y2);
 
   return clear;
 }

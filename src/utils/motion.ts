@@ -9,18 +9,20 @@ type movementFn = (
   frameTime: number
 ) => void;
 
+// start movement
 export const motion: movementFn = (
   shapes, ctx, canvasWidth, canvasHeight, frames, frameTime
-)=> {
+) => {
   increase(
     shapes, ctx, canvasWidth,
     canvasHeight, frames, frameTime
   )
 }
 
-const increase: movementFn =(
+// increase distance between shapes
+const increase: movementFn = (
   shapes, ctx, canvasWidth, canvasHeight, frames, frameTime
-)=> {
+) => {
   let i = 0;
   const interval = setInterval(() => {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
@@ -31,24 +33,24 @@ const increase: movementFn =(
 
     if (i > frames) {
       clearInterval(interval)
-      reduce(shapes, ctx, canvasWidth, canvasHeight, frames, frameTime)
+      decrease(shapes, ctx, canvasWidth, canvasHeight, frames, frameTime)
     }
   }, frameTime)
 }
 
-
-const reduce: movementFn =(
+// decrease distance between shapes
+const decrease: movementFn = (
   shapes, ctx, canvasWidth, canvasHeight, frames, frameTime
-)=> {
-  let j = frames;
+) => {
+  let i = frames;
   const interval = setInterval(() => {
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-    shapes.forEach(shape => shape.move(j / frames))
+    shapes.forEach(shape => shape.move(i / frames))
 
-    j--
+    i--
 
-    if (j < 0) {
+    if (i < 0) {
       clearInterval(interval)
     }
   }, frameTime)

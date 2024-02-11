@@ -2,7 +2,6 @@ const path = require("node:path");
 
 module.exports = {
   entry: "./src/index.ts",
-  watch: true,
   output: {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),

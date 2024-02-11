@@ -8,58 +8,31 @@ import { motion } from "./utils/motion";
 
 const canvas = document.querySelector("canvas");
 
-if (!canvas) {
-  throw "Canvas not found"
-}
+if (!canvas) throw "Canvas not found";
 
 const ctx = canvas.getContext("2d");
 
-if (!ctx) {
-  throw "Canvas context not found"
-}
-
-// const base: line = [{ x: 0, y: 250 }, { x: 400, y: 250 }];
-//
-// // left
-// console.log(findAngle(base, [{ x: 400, y: 250 }, { x: 400, y: 0 }]))
-//
-// // straight
-// console.log(findAngle(base, [{ x: 400, y: 250 }, { x: 500, y: 250 }]))
-//
-// // right
-// console.log(findAngle(base, [{ x: 400, y: 250 }, { x: 400, y: 500 }]))
-
-// console.log(findAngle(
-//   [{ x: 447, y: 217 }, { x: 0, y: 390 }],
-//   [{ x: 0, y: 390 }, { x: 0, y: 500 }]
-// ))
-//
-// console.log(findAngle(
-//   [{ x: 447, y: 217 }, { x: 0, y: 390 }],
-//   [{ x: 0, y: 390 }, { x: 0, y: 0 }]
-// ))
-
-console.log(getRandNumber(1, 4))
-console.log(getRandNumber(1, 4))
-console.log(getRandNumber(1, 4))
-console.log(getRandNumber(1, 4))
+if (!ctx) throw "Canvas context not found";
 
 const { height: canvasHeight, width: canvasWidth } = canvas;
 
+// initial field size (1/4 from full area)
 const width = canvasWidth / 2;
 const height = canvasHeight / 2;
 
+// offset to put initial picture in centre
 const xOffset = width / 2;
 const yOffset = height / 2;
 
-const MIN_DIVIDERS_COUNT = 30;
-const MAX_DIVIDERS_COUNT = 30;
-
+// config
+const MIN_DIVIDERS_COUNT = 35;
+const MAX_DIVIDERS_COUNT = 40;
 const ANIMATION_DURATION_MS = 1000;
 const TARGET_FPS = 60;
 const FRAMES_COUNT = (ANIMATION_DURATION_MS / 1000) * TARGET_FPS;
 const FRAME_TIME_MS = 1000 / TARGET_FPS;
 
+// field apexes
 const TOP_LEFT_CORNER = { x: 0, y: 0 };
 const TOP_RIGHT_CORNER = { x: width, y: 0 };
 const BOTTOM_RIGHT_CORNER = { x: width, y: height };
@@ -72,6 +45,7 @@ const SIDES_COORDS: Array<line> = [
   [BOTTOM_LEFT_CORNER, TOP_LEFT_CORNER], // left line
 ];
 
+// generate random lines to divide canvas
 const dividersCoords = generateDividers(
   getRandNumber(MIN_DIVIDERS_COUNT, MAX_DIVIDERS_COUNT),
   height,
@@ -82,12 +56,12 @@ const dividersCoords = generateDividers(
 const allLines = [...SIDES_COORDS, ...dividersCoords];
 const cleanLines = findCleanLines(allLines, width);
 
+// create shapes using lines
 const shapes = cleanLines.map((line) => new Shape(
   findShapeApexes(line, cleanLines),
   ctx,
   { x: xOffset, y: yOffset }
 ));
 
-motion(
-  shapes, ctx, canvasWidth, canvasHeight, FRAMES_COUNT, FRAME_TIME_MS
-);
+// move shapes
+motion(shapes, ctx, canvasWidth, canvasHeight, FRAMES_COUNT, FRAME_TIME_MS);

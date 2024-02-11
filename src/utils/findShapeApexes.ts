@@ -1,6 +1,7 @@
 import { findAngle } from "./findAngle";
 import { line } from "../types";
 
+// find shapes formed by lines
 export function findShapeApexes(startLine: line, cleanLines: Array<line>) {
   const firstApex = startLine[0];
   const secondApex = startLine[1];
@@ -24,7 +25,6 @@ export function findShapeApexes(startLine: line, cleanLines: Array<line>) {
     if (!touchedLines.length) {
       break;
     }
-
     const nextLine = touchedLines.reduce((res, curr) => {
       const resAngle = findAngle([previousApex, lastApex], res);
 
@@ -33,26 +33,24 @@ export function findShapeApexes(startLine: line, cleanLines: Array<line>) {
       if (resAngle === 0) return curr;
 
       // if (resAngle > 0) {
-      return currAngle !== 0 && currAngle > resAngle
-        ? curr
-        : res
+        return currAngle !== 0 && currAngle > resAngle
+          ? curr
+          : res
       // } else {
       //   return currAngle !== 0 && currAngle < resAngle
       //     ? curr
       //     : res
       // }
-    })
+    });
 
     const nextApex = nextLine?.find(({ x, y }) => lastApex?.x !== x || lastApex?.y !== y) || { x: 0, y: 0 };
 
-    if (shapeApexes.some(({ x, y }) => nextApex.x === x && nextApex.y === y)) {
+    if (shapeApexes.some(({ x, y }, index) => nextApex.x === x && nextApex.y === y && index !== 0)) {
       break;
     }
 
     shapeApexes.push(nextApex)
   }
-
-  // console.log(count)
 
   return shapeApexes
 }

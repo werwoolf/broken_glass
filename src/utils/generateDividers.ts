@@ -1,6 +1,7 @@
 import { line } from "../types";
 import { getRandNumber } from "./getRandNumber";
 
+// generate dividing lines
 export function generateDividers(
   count: number,
   canvasHeight: number,
@@ -25,7 +26,6 @@ export function generateDividers(
 
   return dividers;
 }
-
 
 export function generateDividerSides(SIDES_COORDS: Array<line>): [line, line] {
   const firstSide = getRandNumber(1, SIDES_COORDS.length);

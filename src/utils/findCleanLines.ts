@@ -1,6 +1,7 @@
 import { line } from "../types";
 import { findLineIntersections } from "./findLineIntersections";
 
+// find clean segments that do not intersect any other lines
 export function findCleanLines(lines: Array<line>, maxCoord: number): Array<line> {
   const res: Array<line> = [];
 
@@ -11,7 +12,7 @@ export function findCleanLines(lines: Array<line>, maxCoord: number): Array<line
 
     lineIntersections.slice(1).forEach(({ x, y }) => {
       if (startCoord && (startCoord.x !== x || startCoord.y !== y)) {
-        res.push([startCoord, { x, y }])
+        res.push([startCoord, { x, y }]);
         startCoord = { x, y };
       }
     })

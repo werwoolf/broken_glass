@@ -2,18 +2,17 @@ import { coordinate, rgbColor } from "./types";
 import { getRandNumber } from "./utils/getRandNumber";
 
 export class Shape {
-  readonly apexes: Array<coordinate>; // todo: make private
-  private readonly color: rgbColor;
-  private readonly canvasCtx: CanvasRenderingContext2D;
-  private readonly avgCenterOffset: coordinate;
-  private readonly initOffset: coordinate;
+  private readonly apexes: Array<coordinate>; // coordinates that create the shape
+  private readonly color: rgbColor; // shape color
+  private readonly canvasCtx: CanvasRenderingContext2D; // context for drawing
+  private readonly avgCenterOffset: coordinate; // average offset to center
+  private readonly initOffset: coordinate; // centre of picture
 
   constructor(
     apexes: Array<coordinate>,
     canvasCtx: CanvasRenderingContext2D,
     initOffset: coordinate
   ) {
-    console.log(apexes.length)
     this.apexes = apexes;
     this.canvasCtx = canvasCtx;
     this.initOffset = initOffset;

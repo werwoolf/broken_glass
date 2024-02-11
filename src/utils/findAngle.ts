@@ -1,6 +1,8 @@
 import { line } from "../types";
 
-export function findAngle(line1: line, _line2: line) {
+// find angle between 2 lines (-179 - 179)
+export function findAngle(line1: line, _line2: line): number {
+  // connected point must be first
   const line2 = [
     _line2.find(({ x, y }) => x === line1[1].x && y === line1[1].y) || _line2[0],
     _line2.find(({ x, y }) => x !== line1[1].x || y !== line1[1].y) || _line2[1]
